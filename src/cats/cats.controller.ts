@@ -1,9 +1,10 @@
-import { Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Header } from '@nestjs/common';
 
 //prefix for every route in this controller
 @Controller('cats')
 export class CatsController {
   @Post()
+  @Header('Cache-Control', 'none') //can add headers to the response
   @HttpCode(204)
   create(): string {
     return 'This action adds a new cat';
