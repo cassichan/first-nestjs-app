@@ -5,7 +5,8 @@ import { Request } from 'express';
 @Controller('cats')
 export class CatsController {
   @Get() //can add path information in the decorator to add to the route. example @Get('breed')
-  findAll(@Req() request: Request): string {
+  //   findAll(@Req() request: Request): string {
+  findAll(): string {
     return 'This action returns all cats!';
   }
 }
