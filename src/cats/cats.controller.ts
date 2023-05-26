@@ -10,8 +10,8 @@ export class CatsController {
     return 'This action adds a new cat';
   }
   @Get() //can add path information in the decorator to add to the route. example @Get('breed')
-  findAll(): string {
-    return 'This action returns all cats!';
+  async findAll(): Promise<string[]> {
+    return [];
   }
 
   @Get(':id')
