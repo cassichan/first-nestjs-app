@@ -6,8 +6,11 @@ import {
   Header,
   Param,
   Body,
+  Put,
+  Delete,
 } from '@nestjs/common';
 import { CreateCatDto } from './create-cat.dto';
+import { UpdateCatDto } from './update-cat.dto';
 
 //prefix for every route in this controller
 @Controller('cats')
@@ -28,5 +31,15 @@ export class CatsController {
     //decorate the params method to make the route parameters available as properties of that decorated method parameter
     console.log(params.id);
     return `This action returns a #${params.id} cat`;
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
+    return `This action updates a #${id} cat`;
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `This action removes a #${id} cat`;
   }
 }
