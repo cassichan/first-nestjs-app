@@ -8,8 +8,11 @@ import {
   Body,
   Put,
   Delete,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
-import { CreateCatDto } from './create-cat.dto';
+import { Response } from 'express';
+// import { CreateCatDto } from './create-cat.dto';
 import { UpdateCatDto } from './update-cat.dto';
 
 //prefix for every route in this controller
@@ -18,12 +21,12 @@ export class CatsController {
   @Post()
   @Header('Cache-Control', 'none') //can add headers to the response
   @HttpCode(204)
-  async create(@Body() createCatDto: CreateCatDto) {
-    return 'This action adds a new cat';
+  async create(@Res() res: Response) {
+    res.status(HttpStatus.CREATED).send();
   }
   @Get() //can add path information in the decorator to add to the route. example @Get('breed')
-  async findAll(): Promise<string[]> {
-    return [];
+  findAll(@Res() res: Response) {
+    res.status(HttpStatus.OK).json([]);
   }
 
   @Get(':id')
