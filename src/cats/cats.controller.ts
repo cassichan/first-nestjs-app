@@ -19,8 +19,6 @@ import { UpdateCatDto } from './update-cat.dto';
 @Controller('cats')
 export class CatsController {
   @Post()
-  @Header('Cache-Control', 'none') //can add headers to the response
-  @HttpCode(204)
   async create(@Res() res: Response) {
     res.status(HttpStatus.CREATED).send();
   }
