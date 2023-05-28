@@ -10,6 +10,7 @@ import {
   Delete,
   Res,
   HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { Response } from 'express';
 // import { CreateCatDto } from './create-cat.dto';
@@ -22,9 +23,14 @@ export class CatsController {
   async create(@Res() res: Response) {
     res.status(HttpStatus.CREATED).send();
   }
-  @Get() //can add path information in the decorator to add to the route. example @Get('breed')
-  findAll(@Res() res: Response) {
-    res.status(HttpStatus.OK).json([]);
+  // @Get() //can add path information in the decorator to add to the route. example @Get('breed')
+  // findAll(@Res() res: Response) {
+  //   res.status(HttpStatus.OK).json([]);
+  // }
+
+  @Get()
+  findAll() {
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   @Get(':id')
