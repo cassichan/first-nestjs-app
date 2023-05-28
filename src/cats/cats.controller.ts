@@ -28,9 +28,26 @@ export class CatsController {
   //   res.status(HttpStatus.OK).json([]);
   // }
 
+  // @Get()
+  // findAll() {
+  //   throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+  // }
+
   @Get()
-  findAll() {
-    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+  async findAll() {
+    //missing service from constructor
+    try {
+      await this.service.findAll();
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'This is a custom message',
+        },
+        HttpStatus.FORBIDDEN,
+        { cause: error },
+      );
+    }
   }
 
   @Get(':id')
