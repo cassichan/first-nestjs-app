@@ -1,19 +1,16 @@
 import {
   Controller,
   Get,
-  HttpCode,
   Post,
-  Header,
   Param,
   Body,
   Put,
   Delete,
   Res,
   HttpStatus,
-  HttpException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { Response } from 'express';
-// import { CreateCatDto } from './create-cat.dto';
 import { UpdateCatDto } from './update-cat.dto';
 
 //prefix for every route in this controller
@@ -28,26 +25,9 @@ export class CatsController {
   //   res.status(HttpStatus.OK).json([]);
   // }
 
-  // @Get()
-  // findAll() {
-  //   throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-  // }
-
   @Get()
   async findAll() {
-    //missing service from constructor
-    try {
-      await this.service.findAll();
-    } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: 'This is a custom message',
-        },
-        HttpStatus.FORBIDDEN,
-        { cause: error },
-      );
-    }
+    throw new ForbiddenException();
   }
 
   @Get(':id')
