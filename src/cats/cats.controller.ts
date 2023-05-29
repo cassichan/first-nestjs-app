@@ -1,55 +1,19 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Param,
-  Body,
-  Put,
-  Delete,
-  Res,
-  HttpStatus,
-  ForbiddenException,
-  ParseIntPipe,
-} from '@nestjs/common';
-import { Response } from 'express';
-import { UpdateCatDto } from './update-cat.dto';
-
-//prefix for every route in this controller
+import { Controller, Get, Post, Body } from '@nestjs/common';
+import { CatsService } from './cats.service';
+import { CreateCatDto } from './create-cat.dto';
+import { Cat } from 'src/interfaces/cat.interface';
 @Controller('cats')
 export class CatsController {
+  constructor(private catsService: CatsService) {}
+
   @Post()
-  async create(@Res() res: Response) {
-    res.status(HttpStatus.CREATED).send();
+  async create(@Body() createCatDto: CreateCatDto) {
+    this.catsService.create(createCatDto);
+    console.log(this.catsService.findAll());
   }
-  // @Get() //can add path information in the decorator to add to the route. example @Get('breed')
-  // findAll(@Res() res: Response) {
-  //   res.status(HttpStatus.OK).json([]);
-  // }
 
   @Get()
-  async findAll() {
-    throw new ForbiddenException();
-  }
-
-  //define catsService. will throw exception if route is not a numeric string
-  @Get(':id')
-  async findOne(
-    @Param(
-      'id',
-      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-    )
-    id: number,
-  ) {
-    return this.catsService.findOne(id);
-  }
-
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
-    return `This action updates a #${id} cat`;
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return `This action removes a #${id} cat`;
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
   }
 }
