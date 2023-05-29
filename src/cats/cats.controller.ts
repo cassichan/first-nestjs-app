@@ -9,6 +9,7 @@ import {
   Res,
   HttpStatus,
   ForbiddenException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { UpdateCatDto } from './update-cat.dto';
@@ -30,11 +31,10 @@ export class CatsController {
     throw new ForbiddenException();
   }
 
+  //define catsService. will throw exception if route is not a numeric string
   @Get(':id')
-  findOne(@Param() params: any): string {
-    //decorate the params method to make the route parameters available as properties of that decorated method parameter
-    console.log(params.id);
-    return `This action returns a #${params.id} cat`;
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.catsService.findOne(id);
   }
 
   @Put(':id')
